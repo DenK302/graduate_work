@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>{{ research.topic }}</h1>
+            </div>
+            <p class="word"><strong>Выполнил: </strong><a
+                    href="{{ research.student.get_absolute_url }}">{{ research.student.full_name }}</a></p>
+            <p class="word"><strong>Руководитель: </strong> <a
+                    href="{{ research.teacher.get_absolute_url }}">{{ research.teacher.full_name }}</a></p>
+            <p class="word"><strong>Цель исследования: </strong>{{ research.purpose }}</p>
+            <p class="word"><strong>Задачи исследования: </strong>{{ research.objectives }}</p>
+            <p class="word"><strong>Планируемые результаты: </strong>{{ research.results }}</p>
+            <p class="word"><strong>Планируемая сфера внедрения: </strong>{{ research.scope }}</p>
+            <p class="word"><strong>Организация для внедрения: </strong>{{ research.organization }}</p>
+            {% if research.explanation %}
+                <p class="word"><strong>Пояснение по планам внедрения: </strong>{{ research.explanation }}</p>
+            {% endif %}
+            <p class="word"><strong>Стадия проработки внедрения: </strong>{{ research.stage }}</p>
+            <p class="word"><strong>Дата начала работы: </strong>{{ research.date }}</p>
+            {% if research.docfile %}
+                <p class="word"><strong>Пояснительная записка: </strong> <a
+                        href="/docs/{{ research.docfile }}">{{ research.docfile.name }}</a>
+                </p>
+            {% endif %}
+            {% if research.score %}
+                <p class="word"><strong>Полученная отметка: </strong>{{ research.score }}</p>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <input type="submit" value="Изменить" class="send"
+                       onclick="document.location='{% url 'edit-research' research.pk %}'">
+                <input type="submit" value="Удалить" class="send"
+                       onclick="document.location='{% url 'delete-teacher' research.pk %}'">
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

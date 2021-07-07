@@ -1,0 +1,118 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>Редактирование записи о работе</h1>
+            </div>
+            <form action="{% url 'edit-research' research.id %}" method="post"
+                  enctype="multipart/form-data">{% csrf_token %}
+                <ul class="create-text">
+                    <li>
+                        <p class="word-p">Тема исследования:</p>
+                        <input type="text" class="word" placeholder="" name="topic" value="{{ research.topic }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Цель исследования:</p>
+                        <input type="text" class="word" placeholder="" name="purpose" value="{{ research.purpose }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Задачи исследования:</p>
+                        <input type="text" class="word" placeholder="" name="objectives"
+                               value="{{ research.objectives }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Планируемые результаты:</p>
+                        <input type="text" class="word" placeholder="" name="results"
+                               value="{{ research.results }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Планируемая сфера внедрения:</p>
+                        <input type="text" class="word" placeholder="" name="scope"
+                               value="{{ research.scope }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Организация для внедрения:</p>
+                        <input type="text" class="word" placeholder="" name="organization"
+                               value="{{ research.organization }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Пояснение по планам внедрения:</p>
+                        <input type="text" class="word" placeholder="" name="explanation"
+                               value="{{ research.explanation }}">
+                    </li>
+                    <li>
+                        <p class="word-p">Стадия проработки вопроса о внедрении:</p>
+                        <input type="text" class="word" placeholder="" name="stage"
+                               value="{{ research.stage }}">
+                    </li>
+                    <li>
+                        <p class="word-p">ФИО студента:</p>
+                        <select name="student_id" class="word">
+                            <option value="{{ research.student.id }}" selected>{{ research.student.full_name }}</option>
+                            {% for student in students %}
+                                {% if not student.research %}
+                                    <option value="{{ student.id }}">{{ student.full_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </li>
+                    <li>
+                        <p class="word-p">ФИО руководителя:</p>
+                        <select name="teacher_id" id="teacher_id" class="word">
+                            {% for teacher in teachers %}
+                                <option value="{{ teacher.id }}">{{ teacher.full_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <script>
+                            var teacherset = document.querySelector('#teacher_id').getElementsByTagName('option');
+                            for (let i = 0; i < teacherset.length; i++) {
+                                if (teacherset[i].value === '{{ research.teacher.id }}')
+                                    teacherset[i].selected = true;
+                            }
+                        </script>
+                    </li>
+                    <li>
+                        <p class="word-p">Дата начала работы (ГГГГ-ММ-ДД):</p>
+                        <input type="text" class="word" placeholder="" name="date_create"
+                               value="{{ research.date.isoformat }}">
+                    </li>
+                    <li>
+                        <p class="word-p">Полученная отметка:</p>
+                        <select name="score" id="score" class="word">
+                            <option value selected=""></option>
+                            {% for i in '1234567891'|make_list %}
+                                <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+                    {% if research.score %}
+                        <script>
+                            var formset = document.querySelector('#score').getElementsByTagName('option');
+                            for (let i = 0; i < formset.length; i++) {
+                                if (formset[i].value === '{{ research.score }}')
+                                    formset[i].selected = true;
+                            }
+                        </script>
+                    {% endif %}
+                    <li>
+                        <p class="word-p">Пояснительная записка:</p>
+                        <p class="word">
+                            <a href="/docs/{{ research.docfile }}">{{ research.docfile.name }}</a><br>
+                            Изменить файл:
+                            <input type="file" name="docs">
+                        </p>
+                    </li>
+                    <input type="submit" value="Сохранить" class="send">
+                </ul>
+            </form>
+        </div>
+    </section>
+{% endblock %}

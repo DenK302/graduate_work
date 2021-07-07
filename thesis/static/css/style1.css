@@ -1,0 +1,98 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.word {
+    width: 100%;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    list-style-type: none;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #7beec7;
+
+}
+
+.word-p {
+    margin-left: 20px;
+    margin-bottom: -16px;
+}
+
+.login {
+    width: 50%;
+    height: 300px;
+    margin-left: 27%;
+}
+
+.login-data {
+    border: 1px solid #7beec7;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.h-login {
+    margin-top: 100px;
+    bottom: 0;
+    margin-bottom: 50px;
+}
+
+.send-login {
+    color: white;
+    width: 250px;
+    margin-left: 28%;
+    margin-bottom: 50px;
+    background-color: #7beec7;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.send-login:hover {
+    -webkit-transform: scale(1.01);
+    -ms-transform: scale(1.01);
+    transform: scale(1.01);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+}
+
+.pagination {
+    margin-top: 20px;
+    margin-bottom: 80px;
+    width: 100%;
+
+}
+
+.prev-next {
+    width: 150px;
+    margin: 0 25px;
+}
+
+.page-current {
+    padding: 20px 30px;
+}
+
+.btn-pagination {
+    color: white;
+    background-color: #7beec7;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btn-pagination:hover {
+    -webkit-transform: scale(1.01);
+    -ms-transform: scale(1.01);
+    transform: scale(1.01);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+}
+
+#canvas {
+    border: 1px solid black;
+
+}

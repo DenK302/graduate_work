@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>Внести запись о руководителе</h1>
+            </div>
+            <form action="{% url 'create-teacher' %}" method="post">{% csrf_token %}
+                <ul class="create-text">
+                    <li>
+                        <input type="text" class="word" placeholder="ФИО руководителя" name="full_name" value required>
+                    </li>
+                    <li>
+                        <input type="text" class="word" placeholder="Степень руководителя" name="degree" value
+                               required>
+                    </li>
+                    <li>
+                        <input type="text" class="word" placeholder="Звание руководителя" name="title" value
+                               required>
+                    </li>
+                    <li>
+                        <input type="text" class="word" placeholder="Номер телефона" name="phone_number">
+                    </li>
+                    <li>
+                        <input type="text" class="word" placeholder="Адрес электронной почты" name="email">
+                    </li>
+                </ul>
+                <input type="submit" value="Сохранить" class="send">
+            </form>
+        </div>
+    </section>
+{% endblock %}

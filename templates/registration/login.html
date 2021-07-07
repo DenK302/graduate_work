@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+    <section>
+        <div class="container">
+            <div class="login">
+                <div class="h-login">
+                    <h1>Войдите в аккаунт</h1>
+                </div>
+                <form method="post" action="{% url 'login' %}">{% csrf_token %}
+                    <p>{{ form.username.label_tag }}</p>
+                    <p class="login-data">{{ form.username }}</p>
+                    <p>{{ form.password.label_tag }}</p>
+                    <p class="login-data">{{ form.password }}</p>
+                    {% if form.errors %}
+                        <p style="color: #ff0000">Неверное имя пользователя или пароль. Попробуйте снова.</p><br>
+                    {% endif %}
+                    <div>
+                        <input type="submit" value="Войти" class="send-login"/>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

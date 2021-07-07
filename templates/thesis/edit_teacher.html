@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>Редактирование записи о руководителе</h1>
+            </div>
+            <form action="{% url 'edit-teacher' teacher.id %}" method="post">{% csrf_token %}
+                <ul class="create-text">
+                    <li>
+                        <p class="word-p">ФИО руководителя:</p>
+                        <input type="text" class="word" placeholder="" name="full_name" value="{{ teacher.full_name }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Степень руководителя:</p>
+                        <input type="text" class="word" placeholder="" name="degree" value="{{ teacher.degree }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Звание руководителя:</p>
+                        <input type="text" class="word" placeholder="" name="title" value="{{ teacher.title }}"
+                               required>
+                    </li>
+                    <li>
+                        <p class="word-p">Номер телефона:</p>
+                        <input type="text" class="word" placeholder="" name="phone_number"
+                               value="{{ teacher.phone_number }}">
+                    </li>
+                    <li>
+                        <p class="word-p">Адрес электронной почты:</p>
+                        <input type="text" class="word" placeholder="" name="email"
+                               value="{{ teacher.email }}">
+                    </li>
+                </ul>
+                <input type="submit" value="Сохранить" class="send">
+            </form>
+{% endblock %}

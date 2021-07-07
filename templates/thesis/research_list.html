@@ -1,0 +1,59 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>Список работ</h1>
+            </div>
+            <div class="search">
+                <div class="search-input">
+                    <form action="{% url 'search_work_results' %}" method="get" id="form_query">
+                        <input name="query" id="query" type="text" placeholder="Поиск...">
+                        <button class="search-button"
+                                style="background: url({% static 'img/magnifier.svg' %})"></button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12">
+                {% if research_list %}
+                    {% for research in research_list %}
+                        <div class="col-md-12">
+                            <div class="list-margin">
+                                <div class="section-title"
+                                     style="text-align:left;float:left;width:100%;margin-bottom:0">
+                                    <span><a href="{{ research.get_absolute_url }}">{{ research.topic }}</a></span>
+                                    <p class="plan_price montserrat-text uppercase"><a
+                                            href="{{ research.student.get_absolute_url }}">{{ research.student.full_name }}</a>
+                                    </p>
+                                </div>
+                                <p>
+                                    Руководитель: <a
+                                        href="{{ research.teacher.get_absolute_url }}">{{ research.teacher.full_name }}</a><br>
+                                    Дата создания: {{ research.date }}<br>
+                                    {% if user.is_authenticated %}
+                                        <td><a href="{% url 'edit-research' research.id %}">Изменить</a> |
+                                            <a href="{% url 'delete-work' research.id %}">Удалить</a></td>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-md-12">
+                        <div class="list-margin">
+                            <div class="section-title">
+                                <span>Исследования не найдены</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            {% if user.is_authenticated %}
+                <span><a href="{% url 'create-work' %} " class="btn green">Внести работу</a></span>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

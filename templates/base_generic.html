@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% block title %}<title>Test</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Добавление дополнительного статического CSS файла -->
+    {% load static %}
+    {#  <link rel="stylesheet" href="{% static 'css/style1.css' %}">#}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animsition.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+
+</head>
+<body class="animsition" style="animation-duration: 1.1s; opacity: 1;">
+<header class="main-header">
+    <div class="container">
+        <div class="logo">
+
+        </div>
+        <div class="menu">
+            <nav class="desktop-nav">
+                {% block sidebar %}
+                    <ul class="first-level">
+                        <li><a href="{% url 'index' %}">Главная</a></li>
+                        <li><a href="{% url 'works' %}">Список работ</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'students' %}">Список студентов</a></li>
+                            <li><a href="{% url 'teachers' %}">Список руководителей</a></li>
+                            <li><a href="">Пользователь: {{ user.get_username }}</a></li>
+                            <li><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></li>
+                        {% endif %}
+                    </ul>
+                {% endblock %}
+            </nav>
+        </div>
+    </div>
+</header>
+{% block content %}{% endblock %}
+{% block pagination %}
+    {% if is_paginated %}
+        <div class="container">
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <div class="prev-next" style="float: left">
+                        <form>
+                            <input type="button" value="Назад" class="btn-pagination"
+                                   onClick='location.href="{{ request.path }}?page={{ page_obj.previous_page_number }}"'>
+                        </form>
+                    </div>
+                {% endif %}
+                <div class="page-current" style="float: left">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                </div>
+                {% if page_obj.has_next %}
+                    <div class="prev-next" style="float: left">
+                        <form>
+                            <input type="button" value="Далее" class="btn-pagination"
+                                   onClick='location.href="{{ request.path }}?page={{ page_obj.next_page_number }}"'>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

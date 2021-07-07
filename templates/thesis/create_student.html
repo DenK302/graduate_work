@@ -1,0 +1,82 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="form-create">
+                <div class="h1">
+                    <h1>Внести запись об авторе работы</h1>
+                </div>
+                <form action="{% url 'create-student' %}" method="post">{% csrf_token %}
+                    <ul class="create-text">
+                        <li>
+                            <input type="text" class="word" placeholder="ФИО студента" name="full_name" value required>
+                        </li>
+                        <li>
+                            <input type="text" class="word" placeholder="Номер телефона" name="phone_number">
+                        </li>
+                        <li>
+                            <input type="text" class="word" placeholder="Адрес электронной почты" name="email">
+                        </li>
+                        <li>
+                            <p class="word-p">Категория:</p>
+                            <select name="category" id="category" class="word">
+                                {% for index,name in category_student %}
+                                    <option value="{{ index }}">{{ name }}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                        <li>
+                            <p class="word-p">Специальность:</p>
+                            <select name="specialty" id="specialty" class="word">
+                                {% for index,name in student_specialty %}
+                                    <option value="{{ index }}">{{ index }}, {{ name }}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                        <li>
+                            <p class="word-p">Форма обучения:</p>
+                            <select name="form" id="form" class="word">
+                                {% for index, name in student_form %}
+                                    <option value="{{ index }}">{{ name }}</option>
+                                {% endfor %}
+                            </select>
+                        </li>
+                        <li>
+                            <p class="word-p">Дата начала обучения:</p>
+                            <input type="date" name="date_start" placeholder="Дата начала обучения" class="word" value required>
+                        </li>
+                        <li>
+                            <p class="word-p">Дата окончания обучения:</p>
+                            <input type="date" name="date_end" placeholder="Дата окончания обучения" class="word" value required>
+                        </li>
+                    </ul>
+                    <script>
+                        $("#category").on("change", function () {
+                            if (category.value === 'С') {
+                                $("#specialty").empty();
+                                {% for index,name in student_specialty %}
+                                    var opt = document.createElement("option");
+                                    opt.value = '{{ index }}';
+                                    opt.innerHTML = '{{ index }}, {{ name }}';
+                                    specialty.add(opt);
+                                {% endfor %}
+                            } else if (category.value === 'М') {
+                                $("#specialty").empty();
+                                {% for index,name in magistr_specialty %}
+                                    var opt = document.createElement("option");
+                                    opt.value = '{{ index }}';
+                                    opt.innerHTML = '{{ index }}, {{ name }}';
+                                    specialty.add(opt);
+                                {% endfor %}
+                            } else if (category.value === 'А') {
+                                $("#specialty").empty();
+                            }
+                        })
+                    </script>
+                    <input type="submit" value="Сохранить" class="send">
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

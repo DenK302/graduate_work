@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>Последние добавленные работы</h1>
+            </div>
+            <div class="row">
+                <div class="flex">
+                    {% for research in latest_research_list %}
+                        <div class="col-md-4 col-sm-6 col-xs-12 wow fadeInUp flex2 pricing_plan">
+                            {#					<div class="pricing_plan">#}
+                            <div class="plan_title montserrat-text uppercase"><a
+                                    href="{{ research.get_absolute_url }}">{{ research.topic|truncatechars_html:35 }}</a>
+                            </div>
+                            <div class="plan_price montserrat-text uppercase"><a class="student-name"
+                                                                                 href="{{ research.student.get_absolute_url }}">{{ research.student.full_name }}</a><br>
+                            </div>
+                            <ul class="list">
+                                <li>
+                                    Руководитель: <a
+                                        href="{{ research.teacher.get_absolute_url }}">{{ research.teacher.full_name }}</a><br>
+                                    Дата создания: {{ research.date }}
+                                </li>
+                                <br>
+                            </ul>
+                            <a href="{{ research.get_absolute_url }}" class="btn green"><span>Подробнее</span></a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

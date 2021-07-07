@@ -1,0 +1,56 @@
+{% extends "base_generic.html" %}
+{% block content %}
+    {% load static %}
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>Список руководителей</h1>
+            </div>
+            <div class="search">
+                <div class="search-input">
+                    <form action="{% url 'search_teacher_results' %}" method="get" id="form_query">
+                        <input name="query" id="query" type="text" placeholder="Поиск...">
+                        <button class="search-button"
+                                style="background: url({% static 'img/magnifier.svg' %})"></button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12">
+                {% if teacher_list %}
+                    {% for teacher in teacher_list %}
+                        <div class="col-md-12">
+                            <div class="list-margin">
+                                <div class="section-title"
+                                     style="text-align:left;float:left;width:100%;margin-bottom:-10px">
+                                    <span><a href="{{ teacher.get_absolute_url }}">{{ teacher.full_name }}</a></span>
+                                </div>
+                                <p>
+                                    Степень: {{ teacher.degree }}<br>
+                                    Звание: {{ teacher.title }}<br>
+                                </p>
+                                {% if user.is_authenticated %}
+                                    <td><a href="{% url 'edit-teacher' teacher.id %}">Изменить</a> | <a
+                                            href="{% url 'delete-teacher' teacher.id %}">Удалить</a>
+                                    </td>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-md-12">
+                        <div class="list-margin">
+                            <div class="section-title">
+                                <span>Руководители не найдены</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                {% endif %}
+            </div>
+            {% if user.is_authenticated %}
+                <span><a href="{% url 'create-teacher' %}" class="btn green create">Внести руководителя</a></span>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}
