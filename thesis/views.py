@@ -1,14 +1,16 @@
-from django.db.models.functions import TruncYear, Cast
-from django.shortcuts import render, get_object_or_404
-from .models import Teacher, Student, Research
-from django.views import generic
-from django.db.models import Q, Sum, Count
-from django.views.generic import TemplateView, ListView
-from django.http import Http404, HttpResponseRedirect, HttpResponseNotFound
-from django.urls import reverse
-import os
+import os, zipfile
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import FloatField
+from django.db.models import Q, Sum, Count
+from django.db.models.functions import TruncYear, Cast
+from django.http import Http404, HttpResponseRedirect, HttpResponseNotFound
+from django.shortcuts import render
+from django.urls import reverse
+from django.views import generic
+from django.views.generic import ListView
+
+from .models import Teacher, Student, Research
 
 
 def index(request):
@@ -267,10 +269,15 @@ def CreateResearch(request):
         else:
             a.score = request.POST['score']
         a.save()
-        if request.FILES:
-            a.docfile = request.FILES.get("docs")
-            extension = os.path.splitext(a.docfile.name)[1]
-            a.docfile.name = a.topic + extension
+        if request.FILES['file']:
+            z = zipfile.ZipFile('docs/' + a.topic + '.zip', 'w')
+            for f in request.FILES.getlist('file'):
+                a.docfile = f
+                a.save()
+                z.write('docs/' + str(a.docfile), str(a.docfile), compress_type=zipfile.ZIP_DEFLATED)
+                a.docfile.delete()
+            z.close()
+            a.docfile = a.topic + '.zip'
             a.save()
         return HttpResponseRedirect(reverse('works'))
     else:
@@ -314,9 +321,14 @@ def EditResearch(request, pk):
             research.save()
             if request.FILES:
                 research.docfile.delete()
-                research.docfile = request.FILES.get("docs")
-                extension = os.path.splitext(research.docfile.name)[1]
-                research.docfile.name = research.topic + extension
+                z = zipfile.ZipFile('docs/' + research.topic + '.zip', 'w')
+                for f in request.FILES.getlist('file'):
+                    research.docfile = f
+                    research.save()
+                    z.write('docs/' + str(research.docfile), str(research.docfile), compress_type=zipfile.ZIP_DEFLATED)
+                    research.docfile.delete()
+                z.close()
+                research.docfile = research.topic + '.zip'
                 research.save()
             return HttpResponseRedirect(reverse('works'))
         else:

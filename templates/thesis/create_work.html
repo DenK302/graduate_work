@@ -6,7 +6,7 @@
             <div class="h1">
                 <h1>Внести запись о работе</h1>
             </div>
-            <form action="{% url 'create-work' %}" method="post">{% csrf_token %}
+            <form action="{% url 'create-work' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <ul class="create-text">
                     <li>
                         <input type="text" class="word" placeholder="Тема исследования" name="topic" value required>
@@ -77,7 +77,7 @@
                     </li>
                     <li>
                         <p class="word-p">Пояснительная записка:</p>
-                        <input type="file" name="docs" class="word">
+                        <input type="file" name="file" class="word" multiple>
                     </li>
                 </ul>
                 <input type="submit" value="Сохранить" class="send">
