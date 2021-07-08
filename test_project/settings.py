@@ -27,7 +27,7 @@ SECRET_KEY = 'el1f2iim#@r$bevdmy^^+)0mra9m65#-3x1_^9j4aa3i26=&5-'
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['diplom.iseu.by', '10.200.131.103', '127.0.0.1']
 
 # Application definition
 
