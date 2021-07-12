@@ -55,6 +55,8 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
 }
 
 input {
@@ -119,8 +121,8 @@ input {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    width: calc(33% - 20px);
-    margin: 10px;
+    width: calc(32% - 20px);
+    margin: 5px;
 }
 
 .search {
@@ -1217,6 +1219,7 @@ footer.main-footer nav.footer-nav ul li a {
     border-left: 1px solid #d0d0d0;
     border-right: 1px solid #d0d0d0;
     border-bottom: 1px solid #d0d0d0;
+    margin: 5px;
 }
 
 .pricing_plan:after {
@@ -1254,7 +1257,7 @@ footer.main-footer nav.footer-nav ul li a {
     font-size: 14px;
     display: inline-block;
     position: relative;
-    height: 50px;
+    height: 5rem;
 }
 
 .pricing_plan ul {

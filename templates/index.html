@@ -11,8 +11,7 @@
             <div class="row">
                 <div class="flex">
                     {% for research in latest_research_list %}
-                        <div class="col-md-4 col-sm-6 col-xs-12 wow fadeInUp flex2 pricing_plan">
-                            {#					<div class="pricing_plan">#}
+                        <div class="col-md-3 col-sm-5 col-xs-12 wow fadeInUp animated pricing_plan" style="visibility: visible; animation-name: fadeInUp;">
                             <div class="plan_title montserrat-text uppercase"><a
                                     href="{{ research.get_absolute_url }}">{{ research.topic|truncatechars_html:35 }}</a>
                             </div>

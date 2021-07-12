@@ -24,9 +24,7 @@
 <body class="animsition" style="animation-duration: 1.1s; opacity: 1;">
 <header class="main-header">
     <div class="container">
-        <div class="logo">
-
-        </div>
+        <div class="logo"></div>
         <div class="menu">
             <nav class="desktop-nav">
                 {% block sidebar %}
@@ -44,6 +42,25 @@
                     </ul>
                 {% endblock %}
             </nav>
+            <nav class="mobile-nav" style="display: none;">
+                <ul class="first-level">
+                    <li><a href="{% url 'index' %}">Главная</a></li>
+                    <li><a href="{% url 'works' %}">Список работ</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'students' %}">Список студентов</a></li>
+                        <li><a href="{% url 'teachers' %}">Список руководителей</a></li>
+                        <li><a href="">Пользователь: {{ user.get_username }}</a></li>
+                        <li><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}?next={{ request.path }}">Войти</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <div class="menu-icon">
+                <div class="line" style="width: 30px;"></div>
+                <div class="line" style="width: 30px;"></div>
+                <div class="line" style="width: 30px;"></div>
+            </div>
         </div>
     </div>
 </header>
@@ -75,5 +92,15 @@
         </div>
     {% endif %}
 {% endblock %}
+<script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/smoothScroll.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.animsition.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/wow.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript">
+	$(window).load(function(){
+		new WOW().init();
+	});
+	</script>
 </body>
 </html>

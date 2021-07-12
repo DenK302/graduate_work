@@ -94,5 +94,11 @@
 
 #canvas {
     border: 1px solid black;
+}
 
+.col-md-3half, .col-sm-5half {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
