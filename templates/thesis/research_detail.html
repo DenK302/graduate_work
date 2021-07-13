@@ -29,10 +29,16 @@
                 <p class="word"><strong>Полученная отметка: </strong>{{ research.score }}</p>
             {% endif %}
             {% if user.is_authenticated %}
-                <input type="submit" value="Изменить" class="send"
-                       onclick="document.location='{% url 'edit-research' research.pk %}'">
-                <input type="submit" value="Удалить" class="send"
-                       onclick="document.location='{% url 'delete-work' research.pk %}'">
+                <div class="row">
+                    <div class="flex">
+                        <div class="col-md-4">
+                            <input type="submit" value="Изменить" class="send"
+                                   onclick="document.location='{% url 'edit-research' research.pk %}'">
+                            <input type="submit" value="Удалить" class="send"
+                                   onclick="document.location='{% url 'delete-work' research.pk %}'">
+                        </div>
+                    </div>
+                </div>
             {% endif %}
         </div>
     </section>

@@ -67,10 +67,6 @@ input {
     padding: 20px;
 }
 
-.search-input {
-    width: 100%;
-}
-
 .form-create {
     margin: auto;
     width: 80%;
@@ -85,7 +81,7 @@ input {
 .send {
     color: white;
     width: 250px;
-    margin-left: 36%;
+
     margin-bottom: 50px;
     background-color: #7beec7;
     text-align: center;
@@ -108,14 +104,6 @@ input {
     margin-bottom: 50px;
 }
 
-.search-button {
-    margin-top: 3px;
-    width: 48px;
-    height: 48px;
-    position: absolute;
-    overflow: hidden;
-    border: none;
-}
 
 .flex2 {
     display: flex;
@@ -123,12 +111,6 @@ input {
     box-sizing: border-box;
     width: calc(32% - 20px);
     margin: 5px;
-}
-
-.search {
-    border: 1px solid #7beec7;
-    margin-bottom: 70px;
-
 }
 
 .green-section {
@@ -249,7 +231,7 @@ ul.social-icons li a:hover {
     z-index: 1;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
-    font-size: 30px;
+    font-size: 19px;
     text-transform: uppercase;
     color: #60606e;
     display: inline-block;
@@ -421,7 +403,7 @@ ul.social-icons li a {
 
 @media (max-width: 991px) {
     .btn {
-        margin: 20px 0;
+        margin: 0;
     }
 }
 

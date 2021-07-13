@@ -8,15 +8,10 @@
             <div class="h1">
                 <h1>Список работ</h1>
             </div>
-            <div class="search">
-                <div class="search-input">
-                    <form action="{% url 'search_work_results' %}" method="get" id="form_query">
-                        <input name="query" id="query" type="text" placeholder="Поиск...">
-                        <button class="search-button"
-                                style="background: url({% static 'img/magnifier.svg' %})"></button>
-                    </form>
-                </div>
-            </div>
+            <form class="search-form" action="{% url 'search_work_results' %}" method="get" id="form_query">
+                <input class="search-input" type="text" placeholder="Поиск..." name="query" id="query">
+                <button type="submit" class="search-button"></button>
+            </form>
             <div class="col-md-12">
                 {% if research_list %}
                     {% for research in research_list %}

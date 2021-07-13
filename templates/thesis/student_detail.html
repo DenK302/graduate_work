@@ -25,12 +25,19 @@
             {% if student.research.score %}
                 <p class="word"><strong>Полученная отметка: </strong> {{ student.research.score }}</p>
             {% endif %}
-            {% if user.is_authenticated %}
-                <input type="submit" value="Изменить" class="send"
-                       onclick="document.location='{% url 'edit-student' student.pk %}'">
-                <input type="submit" value="Удалить" class="send"
-                       onclick="document.location='{% url 'delete-student' student.pk %}'">
-            {% endif %}
+            <div class="row">
+                <div class="flex">
+                    <div class="col-md-4">
+                        {% if user.is_authenticated %}
+                            <input type="submit" value="Изменить" class="send"
+                                   onclick="document.location='{% url 'edit-student' student.pk %}'">
+                            <input type="submit" value="Удалить" class="send"
+                                   onclick="document.location='{% url 'delete-student' student.pk %}'">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 {% endblock %}

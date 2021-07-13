@@ -16,9 +16,13 @@
                     {% if form.errors %}
                         <p style="color: #ff0000">Неверное имя пользователя или пароль. Попробуйте снова.</p><br>
                     {% endif %}
-                    <div>
-                        <input type="submit" value="Войти" class="send-login"/>
-                        <input type="hidden" name="next" value="{{ next }}"/>
+                    <div class="row">
+                        <div class="flex">
+                            <div class="col-md-4">
+                                <input type="submit" value="Войти" class="send-login"/>
+                                <input type="hidden" name="next" value="{{ next }}"/>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

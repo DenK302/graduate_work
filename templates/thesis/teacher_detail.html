@@ -43,15 +43,20 @@
                 </script>
                 <div id="graf" style="width: auto; height: 500px;"></div>
             {% endif %}
-
-            <input type="submit" value="Посмотреть работы" class="send"
-                   onclick="document.location='{% url 'teacher-works' teacher.pk %}'">
-            {% if user.is_authenticated %}
-                <input type="submit" value="Изменить" class="send"
-                       onclick="document.location='{% url 'edit-teacher' teacher.pk %}'">
-                <input type="submit" value="Удалить" class="send"
-                       onclick="document.location='{% url 'delete-teacher' teacher.pk %}'">
-            {% endif %}
+            <div class="row">
+                <div class="flex">
+                    <div class="col-md-4">
+                        <input type="submit" value="Посмотреть работы" class="send"
+                               onclick="document.location='{% url 'teacher-works' teacher.pk %}'">
+                        {% if user.is_authenticated %}
+                            <input type="submit" value="Изменить" class="send"
+                                   onclick="document.location='{% url 'edit-teacher' teacher.pk %}'">
+                            <input type="submit" value="Удалить" class="send"
+                                   onclick="document.location='{% url 'delete-teacher' teacher.pk %}'">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 {% endblock %}

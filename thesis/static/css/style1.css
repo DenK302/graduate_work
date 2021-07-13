@@ -10,7 +10,7 @@
     -webkit-hyphens: auto;
     -ms-hyphens: auto;
     list-style-type: none;
-    margin: 20px;
+    margin: 20px 20px 20px 0;
     padding: 10px;
     border: 1px solid #7beec7;
 
@@ -41,20 +41,18 @@
 
 .send-login {
     color: white;
-    width: 250px;
-    margin-left: 28%;
+    width: 150%;
+    margin-left: 48%;
     margin-bottom: 50px;
     background-color: #7beec7;
     text-align: center;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
     text-transform: uppercase;
+    transform: translateX(-50%);
 }
 
 .send-login:hover {
-    -webkit-transform: scale(1.01);
-    -ms-transform: scale(1.01);
-    transform: scale(1.01);
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
 }
@@ -96,9 +94,34 @@
     border: 1px solid black;
 }
 
-.col-md-3half, .col-sm-5half {
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
+.search-form {
+  position: relative;
+  width: 100%;
+  margin-bottom: 70px;
+}
+.search-input {
+  width: 100%;
+  height: 55px;
+  padding-left: 10px;
+  border: 2px solid #7beec7;
+  border-radius: 5px;
+  outline: none;
+  color: #9E9C9C;
+}
+.search-button {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  width: 54px;
+  height: 54px;
+  border: none;
+  background: #7beec7;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+.search-button:before {
+  content: "\f002";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #ffffff;
 }
