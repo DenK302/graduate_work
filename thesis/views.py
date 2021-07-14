@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import FloatField
 from django.db.models import Q, Sum, Count
 from django.db.models.functions import TruncYear, Cast
-from django.http import Http404, HttpResponseRedirect, HttpResponseNotFound
+from django.http import Http404, HttpResponseRedirect, HttpResponseNotFound, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
@@ -272,10 +272,7 @@ def CreateResearch(request):
         if request.FILES['file']:
             z = zipfile.ZipFile('docs/' + a.topic + '.zip', 'w')
             for f in request.FILES.getlist('file'):
-                a.docfile = f
-                a.save()
-                z.write('docs/' + str(a.docfile), str(a.docfile), compress_type=zipfile.ZIP_DEFLATED)
-                a.docfile.delete()
+                z.writestr(f.name, f.read())
             z.close()
             a.docfile = a.topic + '.zip'
             a.save()
@@ -323,10 +320,7 @@ def EditResearch(request, pk):
                 research.docfile.delete()
                 z = zipfile.ZipFile('docs/' + research.topic + '.zip', 'w')
                 for f in request.FILES.getlist('file'):
-                    research.docfile = f
-                    research.save()
-                    z.write('docs/' + str(research.docfile), str(research.docfile), compress_type=zipfile.ZIP_DEFLATED)
-                    research.docfile.delete()
+                    z.writestr(f.name, f.read())
                 z.close()
                 research.docfile = research.topic + '.zip'
                 research.save()
