@@ -81,7 +81,7 @@ input {
 .send {
     color: white;
     width: 100%;
-
+    border-radius: 5px;
     margin-bottom: 50px;
     background-color: #7beec7;
     text-align: center;
@@ -393,6 +393,7 @@ ul.social-icons li a {
     position: absolute;
     bottom: 15px;
     left: 50%;
+    border-radius: 5px;
     transform: translateX(-50%);
 }
 
@@ -1201,6 +1202,7 @@ footer.main-footer nav.footer-nav ul li a {
     border-left: 1px solid #d0d0d0;
     border-right: 1px solid #d0d0d0;
     border-bottom: 1px solid #d0d0d0;
+    border-radius: 7px;
     margin: 5px;
 }
 
@@ -1238,6 +1240,7 @@ footer.main-footer nav.footer-nav ul li a {
     color: white;
     font-size: 14px;
     display: inline-block;
+    border-radius: 5px;
     position: relative;
     height: 7rem;
 }

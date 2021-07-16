@@ -48,9 +48,11 @@
                     <div class="col-md-4">
                         <input type="submit" value="Посмотреть работы" class="send"
                                onclick="document.location='{% url 'teacher-works' teacher.pk %}'">
-                        {% if user.is_authenticated %}
+                        {% if perms.thesis.change_teacher %}
                             <input type="submit" value="Изменить" class="send"
                                    onclick="document.location='{% url 'edit-teacher' teacher.pk %}'">
+                        {% endif %}
+                        {% if perms.thesis.delete_student %}
                             <input type="submit" value="Удалить" class="send"
                                    onclick="document.location='{% url 'delete-teacher' teacher.pk %}'">
                         {% endif %}

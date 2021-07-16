@@ -1,6 +1,6 @@
 import os, zipfile
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 from django.db.models import FloatField
 from django.db.models import Q, Sum, Count
 from django.db.models.functions import TruncYear, Cast
@@ -147,7 +147,7 @@ class SearchTeacherView(ListView):
         return object_list
 
 
-@login_required
+@permission_required('thesis.add_teacher')
 def CreateTeacher(request):
     if request.POST:
         a = Teacher(
@@ -163,7 +163,7 @@ def CreateTeacher(request):
         return render(request, "thesis/create_teacher.html")
 
 
-@login_required
+@permission_required('thesis.delete_teacher')
 def DeleteTeacher(request, pk):
     try:
         teacher = Teacher.objects.get(pk=pk)
@@ -173,7 +173,7 @@ def DeleteTeacher(request, pk):
         return HttpResponseNotFound("<h2>Руководитель не найден</h2>")
 
 
-@login_required
+@permission_required('thesis.change_teacher')
 def EditTeacher(request, pk):
     try:
         teacher = Teacher.objects.get(pk=pk)
@@ -191,7 +191,7 @@ def EditTeacher(request, pk):
         return HttpResponseNotFound("<h2>Преподаватель не найден</h2>")
 
 
-@login_required
+@permission_required('thesis.add_student')
 def CreateStudent(request):
     if request.POST:
         a = Student(
@@ -212,7 +212,7 @@ def CreateStudent(request):
                        "magistr_specialty": Student.MAGISTR_SPECIALITY, "student_form": Student.FORM_CATEGORY})
 
 
-@login_required
+@permission_required('thesis.delete_student')
 def DeleteStudent(request, pk):
     try:
         student = Student.objects.get(pk=pk)
@@ -222,7 +222,7 @@ def DeleteStudent(request, pk):
         return HttpResponseNotFound("<h2>Студент не найден</h2>")
 
 
-@login_required
+@permission_required('thesis.change_student')
 def EditStudent(request, pk):
     try:
         student = Student.objects.get(pk=pk)
@@ -246,7 +246,7 @@ def EditStudent(request, pk):
         return HttpResponseNotFound("<h2>Студент не найден</h2>")
 
 
-@login_required
+@permission_required('thesis.add_research')
 def CreateResearch(request):
     students = Student.objects.all()
     teachers = Teacher.objects.all()
@@ -281,7 +281,7 @@ def CreateResearch(request):
         return render(request, "thesis/create_work.html", {"students": students, "teachers": teachers})
 
 
-@login_required
+@permission_required('thesis.delete_research')
 def DeleteResearch(request, pk):
     try:
         research = Research.objects.get(pk=pk)
@@ -292,7 +292,7 @@ def DeleteResearch(request, pk):
         return HttpResponseNotFound("<h2>Исследование не найдено</h2>")
 
 
-@login_required
+@permission_required('thesis.change_research')
 def EditResearch(request, pk):
     try:
         research = Research.objects.get(pk=pk)
