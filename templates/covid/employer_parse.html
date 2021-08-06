@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% load static %}
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>Парсинг</h1>
+            </div>
+            <form action="{% url 'employer-parse' %}" method="post"
+                  enctype="multipart/form-data">{% csrf_token %}
+                <ul class="create-text">
+                    <li>
+                        <p class="word-p">Загрузка файла:</p>
+                        <input type="file" name="file" class="word" required style="padding: 15px 10px 5px 10px;">
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="flex">
+                        <div class="col-md-4">
+                            <label>
+                                <input type="submit" value="Сохранить" class="hidden"/>
+                                <svg class="liquid-button"
+                                     data-text="Сохранить"
+                                     data-hover-factor="-10"
+
+                                     data-color2="#7beec7"
+                                     style="margin-left: 48%;
+                                                margin-bottom: 50px;
+                                                transform: translateX(-50%);
+                                                margin-top: -50px;
+                                                font-family: Montserrat, sans-serif;"
+                                ></svg>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.4/dat.gui.min.js'></script>
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

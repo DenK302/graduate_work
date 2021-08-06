@@ -1,0 +1,218 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <section>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <script>
+            function updatesertification() {
+                var chbox;
+                chbox = document.getElementById('sertification');
+                if (chbox.checked) {
+                    document.getElementById('sertificateid').style.display = 'block';
+                    document.getElementById('sertificateidinput').style.display = 'block';
+                } else {
+                    document.getElementById('sertificateid').style.display = 'none';
+                    document.getElementById('sertificateidinput').style.display = 'none';
+                }
+            }
+        </script>
+        <script>
+            function updatewantmake() {
+                var chbox;
+                chbox = document.getElementById('wantmake');
+                if (chbox.checked) {
+                    document.getElementById('wantmaketext').style.display = 'block';
+                    document.getElementById('wantmaketype').style.display = 'block';
+                } else {
+                    document.getElementById('wantmaketext').style.display = 'none';
+                    document.getElementById('wantmaketype').style.display = 'none';
+                    document.getElementById('wantmaketype').disabled;
+                }
+            }
+        </script>
+        <script>
+            function updateselect1() {
+                var sel;
+                sel = document.getElementById('vactinationplaceselector')
+                var inputplace1 = document.getElementById('vactinationplace1')
+                if (sel.value === 'Другое') {
+                    inputplace1.style.display = 'block';
+                    inputplace1.disabled = false;
+                } else {
+                    inputplace1.style.display = 'none';
+                    inputplace1.value = "";
+                    inputplace1.disabled = true;
+                }
+            }
+        </script>
+        <script>
+            function updateselect2() {
+                var sel;
+                sel = document.getElementById('vactinationplaceselector2')
+                var inputplace1 = document.getElementById('vactinationplace2')
+                if (sel.value === 'Другое') {
+                    inputplace1.style.display = 'block';
+                    inputplace1.disabled = false;
+                } else {
+                    inputplace1.style.display = 'none';
+                    inputplace1.value = "";
+                    inputplace1.disabled = true;
+                }
+            }
+        </script>
+        <div class="container">
+            <div class="h1">
+                <h1>Внести запись о сотруднике</h1>
+            </div>
+            <form action="{% url 'employer-create' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <ul class="create-text">
+                    <li>
+                        <p class="word-p">ФИО сотрудника:</p>
+                        <input type="text" class="word" placeholder="" name="fullname" required>
+                    </li>
+                    <li>
+                        <p class="word-p">Дата рождения(ГГГГ-ММ-ДД):</p>
+                        <input type="text" class="word" placeholder="" name="birthdate" required>
+                    </li>
+                    <li>
+                        <p class="word-p">Место жительства:</p>
+                        <input type="text" class="word" placeholder="" name="liveplace" required>
+                    </li>
+                    <li>
+                        <p class="word-p">Подразделение::</p>
+                        <select name="department" id="department" class="word" required>
+                            {% for index, name in department_list %}
+                                <option value="{{ index }}">{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </li>
+                    <li>
+                        <p class="word-p">Должность:</p>
+                        <input type="text" class="word" placeholder="" name="position" required>
+                    </li>
+                    <li>
+                        <p class="word-p">Дата первой вакцинации:</p>
+                        <input type="date" class="word" placeholder="" name="datefirst">
+                    </li>
+                    <li>
+                        <p class="word-p">Место первой вакцинации:</p>
+                        <select name="vactinationplace1" id="vactinationplaceselector" class="word"
+                                onchange="updateselect1()">
+                            <option value="УЗ «Кравира»">УЗ «Кравира»</option>
+                            <option value="14-я городская поликлиника">14-я городская поликлиника</option>
+                            <option value="9-я городская поликлиника">9-я городская поликлиника</option>
+                            <option value="Медцентр ОАО «МТЗ»">Медцентр ОАО «МТЗ»</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                        <input type="text" class="word" placeholder="Введите место первой вакцинации"
+                               name="vactinationplace1" id="vactinationplace1" style="display: none; "
+                               disabled>
+                    </li>
+                    <li>
+                        <p class="word-p">Дата второй вакцинации:</p>
+                        <input type="date" class="word" placeholder="" name="datesecond">
+                    </li>
+                    <li>
+                        <p class="word-p">Место второй вакцинации:</p>
+                        <select name="vactinationplace2" id="vactinationplaceselector2" class="word"
+                                onchange="updateselect2()">
+                            <option value="УЗ «Кравира»">УЗ «Кравира»</option>
+                            <option value="14-я городская поликлиника">14-я городская поликлиника</option>
+                            <option value="9-я городская поликлиника">9-я городская поликлиника</option>
+                            <option value="Медцентр ОАО «МТЗ»">Медцентр ОАО «МТЗ»</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                        <input type="text" class="word" placeholder="Введите место второй вакцинации"
+                               name="vactinationplace2" id="vactinationplace2" style="display: none;" disabled>
+                    </li>
+                    <li>
+                        <p class="word-p">Полная вакцинация:</p>
+                        <p class="word" style="width: 67px;height: 58px;">
+                            <input type="checkbox" name="vactinationfull" id="vactinationfull"
+                                   style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                        </p>
+                    </li>
+                    <li>
+                        <p class="word-p">Сертификат:</p>
+                        <p class="word" style="width: 67px;height: 58px;">
+                            <input type="checkbox" name="sertification" id="sertification"
+                                   onchange="updatesertification()"
+                                   style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                        </p>
+                    </li>
+                    <li>
+                        <p class="word-p" style="display: none;" id="sertificateid">Номер сертификата:</p>
+                        <input type="text" class="word" style="display: none;" placeholder="" name="sertificateid"
+                               id="sertificateidinput"
+                               value="">
+                    </li>
+                    <li>
+                        <p class="word-p">Желает ли сделать:</p>
+                        <p class="word" style="width: 67px;height: 58px;">
+                            <input type="checkbox" name="wantmake" id="wantmake" onchange="updatewantmake()"
+                                   style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                        </p>
+                    </li>
+                    <li>
+                        <p class="word-p" style="display: none;" id="wantmaketext">Варианты прививки:</p>
+                        <select name="wantmaketype" id="wantmaketype" class="word" style="display: none;">
+                            <option value="Спутник V">Российская вакцина "Спутник V"</option>
+                            <option value="Sinovac">Китайская вакцина "Sinovac"</option>
+                        </select>
+                    </li>
+                    <li>
+                        <p class="word-p">Противопоказания:</p>
+                        <input type="text" class="word" placeholder="" name="contraindications" id="contraindications">
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="flex">
+                        <div class="col-md-4">
+                            <input type="submit" value="Сохранить" class="send">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>
+            // With the above scripts loaded, you can call `tippy()` with a CSS
+            // selector and a `content` prop:
+            tippy('#contraindications', {
+                content: 'Запись противопоказаний сотрудника',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+
+            tippy('#vactinationplaceselector', {
+                content: 'Если место вакцинации отсутствует в списке, выберите пункт "Другое" и введите в появившемся поле место вакцинации',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+
+            tippy('#vactinationplaceselector2', {
+                content: 'Если место вакцинации отсутствует в списке, выберите пункт "Другое" и введите в появившемся поле место вакцинации',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+
+
+            tippy('#sertification', {
+                content: 'Если имеется сертификат, то активировать и ввести номер сертификата в поле ниже',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+
+            tippy('#vactinationfull', {
+                content: 'Активировать, если сотрудник прошел полный цикл вакцинации',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+        </script>
+    </section>
+{% endblock %}

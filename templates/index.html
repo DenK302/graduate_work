@@ -1,37 +1,96 @@
 {% extends "base_generic.html" %}
-
 {% block content %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
     <section>
         <div class="container">
             <div class="h1">
-                <h1>Последние добавленные работы</h1>
+                {% if perms.covid.delete_employer %}
+                    {% if group_name_filter %}
+                        <h1>Список сотрудников подразделения "{{ group_name_filter }}"</h1>
+                    {% else %}
+                        <h1>Список сотрудников всех подразделений</h1>
+                    {% endif %}
+                {% else %}
+                    <h1>Список сотрудников подразделения "{{ group_name }}"</h1>
+                {% endif %}
             </div>
-            <div class="row">
-                <div class="flex">
-                    {% for research in latest_research_list %}
-                        <div class="col-md-3 col-sm-5 col-xs-12 wow fadeInUp animated pricing_plan" style="visibility: visible; animation-name: fadeInUp;">
-                            <div class="plan_title montserrat-text uppercase"><a
-                                    href="{{ research.get_absolute_url }}">{{ research.topic|truncatechars_html:35 }}</a>
+            <div class="col-md-12">
+                {% if employer_list %}
+                    {% for employer in employer_list %}
+                        <div class="col-md-12"
+                             style="border: 2px solid #7beec7; border-radius: 13px; margin-bottom: 10px">
+                            <div style="margin-bottom: 30px"></div>
+                            <div class="list-margin" style="margin-left: 25px;">
+                                <div class="section-title"
+                                     style="text-align:left;float:left;width:100%;margin-bottom:0">
+                                    <span><a href="{{ employer.get_absolute_url }}">{{ employer.fullname }}</a></span>
+                                    <p class="plan_price montserrat-text uppercase"><a
+                                            href="{% url 'employer-filter' employer.department %}">{{ employer.get_department_display }}</a>
+                                    </p>
+                                </div>
+                                <p>
+                                    {% if employer.datefirst %}
+                                        <text id="firstvact">Дата первой вакцинации: {{ employer.datefirst }}</text>
+                                        <script>
+                                            var d = new Date();
+                                            var selecteddate = new Date("{{ employer.datefirst.isoformat }}")
+                                            var difference = (d - selecteddate)
+                                            if (difference > 15811200000) {
+                                                document.getElementById('firstvact').style.color = 'red';
+                                            }
+                                        </script>
+                                    {% else %}
+                                        Дата первой вакцинации: не вакцинирован
+                                    {% endif %}
+                                    <br>
+                                    {% if employer.datesecond %}
+                                        <text id="secondvact">Дата второй вакцинации: {{ employer.datesecond }}</text>
+                                        <script>
+                                            var d = new Date();
+                                            var selecteddate = new Date("{{ employer.datesecond.isoformat }}")
+                                            var difference = (d - selecteddate)
+                                            if (difference > 15811200000) {
+                                                document.getElementById('secondvact').style.color = 'red';
+                                            }
+                                        </script>
+                                    {% else %}
+                                        Дата второй вакцинации: не вакцинирован
+                                    {% endif %}
+                                    <br>
+                                    Сотрудник полностью вакцинирован:
+                                    {% if employer.vactinationfull == True %}
+                                        <input type="checkbox" checked="checked" disabled
+                                               style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                                    {% else %}
+                                        <input type="checkbox" disabled
+                                               style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                                    {% endif %}
+                                    <br>
+                                </p>
                             </div>
-                            <div class="plan_price montserrat-text uppercase"><a class="student-name"
-                                                                                 href="{{ research.student.get_absolute_url }}">{{ research.student.full_name }}</a><br>
-                            </div>
-                            <ul class="list">
-                                <li>
-                                    Руководитель: <a
-                                        href="{{ research.teacher.get_absolute_url }}">{{ research.teacher.full_name }}</a><br>
-                                    Дата создания: {{ research.date }}
-                                </li>
-                                <br>
-                            </ul>
-                            <a href="{{ research.get_absolute_url }}" class="btn green"><span>Подробнее</span></a>
                         </div>
                     {% endfor %}
-                </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <div class="list-margin">
+                            <div class="section-title">
+                                <span>Сотрудники не найдены</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
+            {% if perms.covid.delete_employer %}
+                <div class="col-md-12">
+                    <div class="list-margin">
+                        <div class="section-title">
+                            <span><a href="{% url 'employer-create' %} " class="btn green" style="bottom: -70px">Добавить сотрудника</a></span>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
         </div>
     </section>
-
 {% endblock %}

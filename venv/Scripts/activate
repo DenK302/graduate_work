@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Кормужанин\PycharmProjects\test_project\venv"
+VIRTUAL_ENV="C:\Users\Нестерович\PycharmProjects\covid19db\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

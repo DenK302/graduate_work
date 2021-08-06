@@ -1,0 +1,348 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% load static %}
+    <section>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <script>
+            function updatewantmake() {
+                var chbox;
+                chbox = document.getElementById('wantmake');
+                if (chbox.checked) {
+                    document.getElementById('wantmaketext').style.display = 'block';
+                    document.getElementById('wantmaketype').style.display = 'block';
+                } else {
+                    document.getElementById('wantmaketext').style.display = 'none';
+                    document.getElementById('wantmaketype').style.display = 'none';
+                    document.getElementById('wantmaketype').disabled;
+                }
+            }
+        </script>
+        <script>
+            function updateinfo() {
+                var chbox;
+                chbox = document.getElementById('sertification');
+                if (chbox.checked) {
+                    document.getElementById('sertificateid').style.display = 'block';
+                    document.getElementById('sertificateidinput').style.display = 'block';
+                } else {
+                    document.getElementById('sertificateid').style.display = 'none';
+                    document.getElementById('sertificateidinput').style.display = 'none';
+                }
+            }
+        </script>
+        <script>
+            function updateselect1() {
+                var sel;
+                sel = document.getElementById('vactinationplaceselector')
+                var inputplace1 = document.getElementById('vactinationplace1')
+                if (sel.value === 'Другое') {
+                    inputplace1.style.display = 'block';
+                    inputplace1.disabled = false;
+                } else {
+                    inputplace1.style.display = 'none';
+                    inputplace1.value = "";
+                    inputplace1.disabled = true;
+                }
+            }
+        </script>
+        <script>
+            function updateselect2() {
+                var sel;
+                sel = document.getElementById('vactinationplaceselector2')
+                var inputplace1 = document.getElementById('vactinationplace2')
+                if (sel.value === 'Другое') {
+                    inputplace1.style.display = 'block';
+                    inputplace1.disabled = false;
+                } else {
+                    inputplace1.style.display = 'none';
+                    inputplace1.value = "";
+                    inputplace1.disabled = true;
+                }
+            }
+        </script>
+        <div class="container">
+            <div class="h1">
+                <h1>{{ employer.fullname }}</h1>
+            </div>
+            <form action="{% url 'employer-detail' employer.id %}" method="post">{% csrf_token %}
+                <ul class="create-text">
+                    {% if perms.covid.delete_employer %}
+                        <li>
+                            <p class="word-p">ФИО сотрудника:</p>
+                            <input type="text" class="word" placeholder="" name="fullname"
+                                   value="{{ employer.fullname }}">
+                        </li>
+                        <li>
+                            <p class="word-p">Дата рождения:</p>
+                            <input type="text" class="word" placeholder="" name="birthdate"
+                                   value="{{ employer.birthdate }}">
+                        </li>
+                        <li>
+                            <p class="word-p">Место жительства:</p>
+                            <input type="text" class="word" placeholder="" name="liveplace"
+                                   value="{{ employer.liveplace }}">
+                        </li>
+                        <li>
+                            <p class="word-p">Подразделение::</p>
+                            <select name="department" id="department" class="word" required>
+                                {% for index, name in department_list %}
+                                    <option value="{{ index }}">{{ name }}</option>
+                                {% endfor %}
+                            </select>
+                            <script>
+                                var departmentset = document.querySelector('#department').getElementsByTagName('option');
+                                for (let i = 0; i < departmentset.length; i++) {
+                                    if (departmentset[i].value === '{{ employer.department }}')
+                                        departmentset[i].selected = true;
+                                }
+                            </script>
+                        </li>
+                        <li>
+                            <p class="word-p">Должность:</p>
+                            <input type="text" class="word" placeholder="" name="position"
+                                   value="{{ employer.position }}">
+                        </li>
+                    {% else %}
+                        <li>
+                            <p class="word-p">ФИО сотрудника:</p>
+                            <input type="text" class="word" placeholder="" name="fullname"
+                                   value="{{ employer.fullname }}"
+                                   disabled>
+                        </li>
+                        <li>
+                            <p class="word-p">Дата рождения:</p>
+                            <input type="text" class="word" placeholder="" name="birthdate"
+                                   value="{{ employer.birthdate }}"
+                                   disabled>
+                        </li>
+                        <li>
+                            <p class="word-p">Место жительства:</p>
+                            <input type="text" class="word" placeholder="" name="liveplace"
+                                   value="{{ employer.liveplace }}">
+                        </li>
+                        <li>
+                            <p class="word-p">Подразделение::</p>
+                            <select name="department" id="department" class="word" required>
+                                {% for index, name in department_list %}
+                                    <option value="{{ index }}">{{ name }}</option>
+                                {% endfor %}
+                            </select>
+                            <script>
+                                var departmentset = document.querySelector('#department').getElementsByTagName('option');
+                                for (let i = 0; i < departmentset.length; i++) {
+                                    if (departmentset[i].value === '{{ employer.department }}')
+                                        departmentset[i].selected = true;
+                                }
+                                document.getElementById("department").disabled = true;
+                            </script>
+                        </li>
+                        <li>
+                            <p class="word-p">Должность:</p>
+                            <input type="text" class="word" placeholder="" name="position" disabled
+                                   value="{{ employer.position }}">
+                        </li>
+                    {% endif %}
+                    <li>
+                        <p class="word-p">Дата первой вакцинации:</p>
+                        <input type="date" class="word" placeholder="" name="datefirst"
+                               value="{{ employer.datefirst.isoformat }}">
+                    </li>
+                    <li>
+                        <p class="word-p">Дата второй вакцинации:</p>
+                        <input type="date" class="word" placeholder="" name="datesecond"
+                               value="{{ employer.datesecond.isoformat }}">
+                    </li>
+                    <li>
+                        <p class="word-p">Полная вакцинация:</p>
+                        <p class="word" style="width: 67px;height: 58px;">
+                            {% if employer.vactinationfull == True %}
+                                <input type="checkbox" checked="checked" name="vactinationfull" id="vactinationfull"
+                                       aria-label="Означает, что сотрудник полностью прошел всю процедуру вакцинации"
+                                       data-balloon-pos="left"
+                                       style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                            {% else %}
+                                <input type="checkbox" name="vactinationfull" id="vactinationfull"
+                                       aria-label="Означает, что сотрудник полностью прошел всю процедуру вакцинации"
+                                       data-balloon-pos="left"
+                                       style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                            {% endif %}</p>
+                    </li>
+                    <li>
+                        <p class="word-p">Сертификат:</p>
+                        <p class="word" style="width: 67px;height: 58px;">
+                            {% if employer.sertification == True %}
+                                <input type="checkbox" checked="checked" name="sertification" id="sertification"
+                                       onchange="updateinfo()"
+                                       style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                            {% else %}
+                                <input type="checkbox" name="sertification" id="sertification" onchange="updateinfo()"
+                                       style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                            {% endif %}</p>
+                    </li>
+                    <li>
+                        <p class="word-p" style="display: none;" id="sertificateid">Номер сертификата:</p>
+                        {% if employer.sertificateid %}
+                            <input type="text" class="word" style="display: none;" placeholder="" name="sertificateid"
+                                   id="sertificateidinput"
+                                   value="{{ employer.sertificateid }}">
+                        {% else %}
+                            <input type="text" class="word" style="display: none;" placeholder="" name="sertificateid"
+                                   id="sertificateidinput"
+                                   value="">
+                        {% endif %}
+                    </li>
+                    <script>
+                        updateinfo()
+                    </script>
+                    <li>
+                        <p class="word-p">Место первой вакцинации:</p>
+                        <select name="vactinationplace1" id="vactinationplaceselector" class="word"
+                                onchange="updateselect1()">
+                            <option value="УЗ «Кравира»">УЗ «Кравира»</option>
+                            <option value="14-я городская поликлиника">14-я городская поликлиника</option>
+                            <option value="9-я городская поликлиника">9-я городская поликлиника</option>
+                            <option value="Медцентр ОАО «МТЗ»">Медцентр ОАО «МТЗ»</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                        <input type="text" class="word" placeholder="Введите место первой вакцинации"
+                               name="vactinationplace1" id="vactinationplace1" style="display: none; "
+                               disabled>
+                    </li>
+                    <script>
+                        var vactinationplaceselector = document.querySelector('#vactinationplaceselector').getElementsByTagName('option');
+                        for (let i = 0; i < vactinationplaceselector.length; i++) {
+                            if (vactinationplaceselector[i].value === '{{ employer.vactinationplace1 }}') {
+                                vactinationplaceselector[i].selected = true;
+                                throw'';
+                            }
+                            vactinationplaceselector[i].selected = true
+                        }
+                        var inputplace1 = document.getElementById('vactinationplace1')
+                        inputplace1.style.display = 'block';
+                        inputplace1.disabled = false;
+                        inputplace1.value = '{{ employer.vactinationplace1 }}'
+                    </script>
+                    <li>
+                        <p class="word-p">Место второй вакцинации:</p>
+                        <select name="vactinationplace2" id="vactinationplaceselector2" class="word"
+                                onchange="updateselect2()">
+                            <option value="УЗ «Кравира»">УЗ «Кравира»</option>
+                            <option value="14-я городская поликлиника">14-я городская поликлиника</option>
+                            <option value="9-я городская поликлиника">9-я городская поликлиника</option>
+                            <option value="Медцентр ОАО «МТЗ»">Медцентр ОАО «МТЗ»</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                        <input type="text" class="word" placeholder="Введите место второй вакцинации"
+                               name="vactinationplace2" id="vactinationplace2" style="display: none;" disabled>
+                    </li>
+                    <script>
+                        var vactinationplaceselector = document.querySelector('#vactinationplaceselector2').getElementsByTagName('option');
+                        for (let i = 0; i < vactinationplaceselector.length; i++) {
+                            if (vactinationplaceselector[i].value === '{{ employer.vactinationplace2 }}') {
+                                vactinationplaceselector[i].selected = true;
+                                throw'';
+                            }
+                            vactinationplaceselector[i].selected = true
+                        }
+                        var inputplace1 = document.getElementById('vactinationplace2')
+                        inputplace1.style.display = 'block';
+                        inputplace1.disabled = false;
+                        inputplace1.value = '{{ employer.vactinationplace2 }}'
+                    </script>
+                    {% if employer.wantmake == True %}
+                        <li>
+                            <p class="word-p">Желает ли сделать:</p>
+                            <p class="word" style="width: 67px;height: 58px;">
+                                <input type="checkbox" checked="checked" name="wantmake" id="wantmake" onchange="updatewantmake()"
+                                       style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                            </p>
+                        </li>
+                        <li>
+                            <p class="word-p" style="display: block;" id="wantmaketext">Варианты прививки:</p>
+                            <select name="wantmaketype" id="wantmaketype" class="word" style="display: block;">
+                                <option value="Спутник V">Российская вакцина "Спутник V"</option>
+                                <option value="Sinovac">Китайская вакцина "Sinovac"</option>
+                            </select>
+                            <script>
+                                var wanmake = document.querySelector('#wantmaketype').getElementsByTagName('option');
+                                for (let i = 0; i < wanmake.length; i++) {
+                                    if (wanmake[i].value === '{{ employer.wantmaketype }}')
+                                        wanmake[i].selected = true;
+                                }
+                            </script>
+                        </li>
+                    {% else %}
+                        <li>
+                            <p class="word-p">Желает ли сделать:</p>
+                            <p class="word" style="width: 67px;height: 58px;">
+                                <input type="checkbox" name="wantmake" id="wantmake" onchange="updatewantmake()"
+                                       style="width: 23px; height: 23px; vertical-align: middle; margin-top: 0;margin-left: 10px;">
+                            </p>
+                        </li>
+                        <li>
+                            <p class="word-p" style="display: none;" id="wantmaketext">Варианты прививки:</p>
+                            <select name="wantmaketype" id="wantmaketype" class="word" style="display: none;">
+                                <option value="Спутник V">Российская вакцина "Спутник V"</option>
+                                <option value="Sinovac">Китайская вакцина "Sinovac"</option>
+                            </select>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <p class="word-p">Противопоказания:</p>
+                        <input type="text" class="word" placeholder="" name="contraindications" id="contraindications"
+                               value="{{ employer.contraindications }}">
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="flex">
+                        <div class="col-md-4">
+                            <input type="submit" value="Сохранить" class="send">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% if perms.covid.delete_employer %}
+                <div class="row">
+                    <div class="flex">
+                        <div class="col-md-4">
+                            <input type="submit" value="Удалить" class="send"
+                                   onclick="document.location='{% url 'employer-delete' employer.pk %}'">
+                        </div>
+                    </div>
+                </div>
+                </div>
+            {% endif %}
+        <script>
+            tippy('#vactinationplaceselector', {
+                content: 'Если место вакцинации отсутствует в списке, выберите пункт "Другое" и введите в появившемся поле место вакцинации',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+
+            tippy('#vactinationplaceselector2', {
+                content: 'Если место вакцинации отсутствует в списке, выберите пункт "Другое" и введите в появившемся поле место вакцинации',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+
+
+            tippy('#sertification', {
+                content: 'Если имеется сертификат, то активировать и ввести номер сертификата в поле ниже',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+
+            tippy('#vactinationfull', {
+                content: 'Поставить, если сотрудник прошел полный цикл вакцинации',
+                arrow: true,
+                placement: 'top-end'
+
+            });
+        </script>
+    </section>
+{% endblock %}

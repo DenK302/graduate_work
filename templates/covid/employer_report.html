@@ -1,0 +1,61 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="h1">
+                <h1>Выдача отчетов</h1>
+            </div>
+            <ul class="create-text">
+                <li>
+                    <p class="word-p">Выдача отчета:</p>
+                    <p class="word" style="color: rgb(84,84,84)">Отчет о вакцинации (ежедневный)<input
+                            type="submit" value="" class="send"
+                            onclick="document.location='{% url 'employer-reporteveryday' %}'" style="width: 50px;
+                            height: 50px;
+                            margin: -10px;
+                            float: right;
+                            background: #7beec7 url({% static '/img/downloadicon.png' %});
+                            border-radius: 1px">
+                    </p>
+                </li>
+                <li>
+                    <p class="word-p">Выдача отчета:</p>
+                    <p class="word" style="color: rgb(84,84,84)">Отчет о вакцинации (понедельник)<input
+                            type="submit" value="" class="send"
+                            onclick="document.location='{% url 'employer-reportmon' %}'" style="width: 50px;
+                            height: 50px;
+                            margin: -10px;
+                            float: right;
+                            background: #7beec7 url({% static '/img/downloadicon.png' %});
+                            border-radius: 1px">
+                    </p>
+                </li>
+                <li>
+                    <p class="word-p">Выдача отчета:</p>
+                    <p class="word" style="color: rgb(84,84,84)">Отчет о вакцинации (понедельник) до 16:00<input
+                            type="submit" value="" class="send"
+                            onclick="document.location='{% url 'employer-reportmon16' %}'" style="width: 50px;
+                            height: 50px;
+                            margin: -10px;
+                            float: right;
+                            background: #7beec7 url({% static '/img/downloadicon.png' %});
+                            border-radius: 1px">
+                    </p>
+                </li>
+                <li>
+                    <p class="word-p">Выдача отчета:</p>
+                    <p class="word" style="color: rgb(84,84,84)">Отчет о вакцинации (вторник, четверг)<input
+                            type="submit" value="" class="send"
+                            onclick="document.location='{% url 'employer-report123' %}'" style="width: 50px;
+                            height: 50px;
+                            margin: -10px;
+                            float: right;
+                            background: #7beec7 url({% static '/img/downloadicon.png' %});
+                            border-radius: 1px">
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}

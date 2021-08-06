@@ -3,15 +3,17 @@
 <head>
 
     {% block title %}<title>ISEI</title>{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.4/dat.gui.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <!-- Добавление дополнительного статического CSS файла -->
     {% load static %}
-    {#  <link rel="stylesheet" href="{% static 'css/style1.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
@@ -29,11 +31,22 @@
             <nav class="desktop-nav">
                 {% block sidebar %}
                     <ul class="first-level">
-                        <li><a href="{% url 'index' %}">Главная</a></li>
-                        <li><a href="{% url 'works' %}">Список работ</a></li>
+                        <li><a href="{% url 'employers' %}">Главная</a></li>
+                        {% if perms.covid.delete_employer %}
+                            <li><a href="{% url 'employer-report' %}">Отчеты</a></li>
+                            <li><a href="{% url 'employer-parse' %}">Парсинг</a></li>
+                            <li><a href="">Подразделения</a>
+                                <ul class="second-level">
+                                    {% for index, department_name in department_list %}
+                                        <li style="width: 400px;"><a href="{% url 'employer-filter' index %}"
+                                                                     class="animsition-link"
+                                                                     style="font-size: 10px;">{{ department_name|truncatechars_html:40 }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
                         {% if user.is_authenticated %}
-                            <li><a href="{% url 'students' %}">Список студентов</a></li>
-                            <li><a href="{% url 'teachers' %}">Список руководителей</a></li>
                             <li><a href="">Пользователь: {{ user.get_username }}</a></li>
                             <li><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></li>
                         {% else %}
@@ -44,11 +57,8 @@
             </nav>
             <nav class="mobile-nav" style="display: none;">
                 <ul class="first-level">
-                    <li><a href="{% url 'index' %}">Главная</a></li>
-                    <li><a href="{% url 'works' %}">Список работ</a></li>
+                    <li><a href="{% url 'employers' %}">Главная</a></li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'students' %}">Список студентов</a></li>
-                        <li><a href="{% url 'teachers' %}">Список руководителей</a></li>
                         <li><a href="">Пользователь: {{ user.get_username }}</a></li>
                         <li><a href="{% url 'logout' %}?next={{ request.path }}">Выйти</a></li>
                     {% else %}
@@ -97,10 +107,5 @@
 <script type="text/javascript" src="{% static 'js/jquery.animsition.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/wow.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-<script type="text/javascript">
-	$(window).load(function(){
-		new WOW().init();
-	});
-	</script>
 </body>
 </html>
